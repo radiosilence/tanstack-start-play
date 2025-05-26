@@ -1,9 +1,12 @@
 {
   "name": "tanstack-start-play",
-  "module": "index.ts",
+  "module": "./src/index.ts",
   "type": "module",
   "private": true,
   "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
     "codegen:schema": "gql-tada generate-schema https://spacex-production.up.railway.app/",
     "codegen:grapqhl": "gql-tada generate-output",
     "codegen": "bun run codegen:schema && bun run codegen:graphql",
@@ -12,15 +15,23 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@tailwindcss/postcss": "^4.1.7",
+    "@tailwindcss/vite": "^4.1.7",
     "@types/bun": "latest",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.7"
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "@vitejs/plugin-react": "^4.5.0",
+    "tailwindcss": "^4.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "gql.tada": "^1.8.10"
+    "@tanstack/react-router": "^1.120.10",
+    "@tanstack/react-start": "^1.120.10",
+    "gql.tada": "^1.8.10",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vinxi": "^0.5.6"
   }
 }
