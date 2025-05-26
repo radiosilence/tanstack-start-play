@@ -24,6 +24,9 @@
       "suspicious": {
         "noExplicitAny": "off"
       },
+      "correctness": {
+        "noUnknownProperty": "off"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "useNodejsImportProtocol": "off"

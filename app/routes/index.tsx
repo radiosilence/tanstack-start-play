@@ -1,19 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Rockets, getRockets } from "@/components/Rockets";
+import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/")({
-  component: Home,
-  loader: async () => ({
-    rockets: await getRockets(),
-  }),
-});
+export const Route = createFileRoute('/')({
+  component: RouteComponent,
+})
 
-function Home() {
-  const { rockets } = Route.useLoaderData();
-
-  return (
-    <>
-      <Rockets initialData={rockets} />
-    </>
-  );
+function RouteComponent() {
+  return <div>Hello "/"!</div>
 }

@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     // Environment setup & latest features
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM","DOM.Iterable"],
     "target": "ESNext",
     "module": "Preserve",
-    "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
 
@@ -25,16 +24,26 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
 
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
+
+    "isolatedModules": true,
+
+    // Other things
+    "esModuleInterop": true,
+
+    "baseUrl": ".",
+
+    // Plugins
     "plugins": [
       {
         "name": "gql.tada/ts-plugin",
-        "schema": "./schema.graphql",
-        "tadaOutputLocation": "./app/graphql-env.d.ts"
+        "tadaOutputLocation": "./app/graphql-env.d.ts",
+        "schema": "./schema.graphql"
       }
     ]
   }

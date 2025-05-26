@@ -1,6 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { type ResultOf, graphql } from "gql.tada";
+import { graphql, type ResultOf } from "gql.tada";
 import type { ComponentType } from "react";
 import { graffle } from "../graffle";
 
@@ -13,30 +17,30 @@ export const RocketsDocument = graphql(`
   }
 `);
 
-const INTERNAL__getRockets = async () => graffle.gql(RocketsDocument).send();
+const rocketsQuery = async () => graffle.gql(RocketsDocument).send();
 
-export const getRockets = createServerFn({
-  type: "static",
-}).handler(() => INTERNAL__getRockets());
-
-const RocketSkeleton = () => (
-  <span className="loading loading-ring loading-md" />
+export const fetchRockets = createServerFn({ method: "GET" }).handler(() =>
+  rocketsQuery(),
 );
+
+export const getRocketsOptions = ({
+  initialData,
+}: {
+  initialData?: ResultOf<typeof RocketsDocument> | null | undefined;
+} = {}) =>
+  queryOptions({
+    queryKey: ["rockets"],
+    queryFn: () => rocketsQuery(),
+    initialData,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
 
 export const Rockets: ComponentType<{
   initialData: ResultOf<typeof RocketsDocument> | null | undefined;
 }> = ({ initialData }) => {
-  const { data, refetch, isLoading, isRefetching } = useQuery({
-    queryKey: ["rockets"],
-    queryFn: INTERNAL__getRockets,
-    initialData,
-    staleTime: 1000,
-  });
-  console.log({
-    data,
-    refetch,
-    isLoading,
-  });
+  const { data, refetch } = useSuspenseQuery(
+    getRocketsOptions({ initialData }),
+  );
 
   return (
     <>
@@ -44,15 +48,11 @@ export const Rockets: ComponentType<{
         Revalidate
       </button>
       <ul className="list">
-        {isLoading || isRefetching ? (
-          <RocketSkeleton />
-        ) : (
-          data?.rockets?.map((rocket) => (
-            <li key={rocket?.id} className="list-row">
-              {rocket?.name}
-            </li>
-          ))
-        )}
+        {data?.rockets?.map((rocket) => (
+          <li key={rocket?.id} className="list-row">
+            {rocket?.name}
+          </li>
+        ))}
       </ul>
     </>
   );
