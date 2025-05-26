@@ -10,8 +10,8 @@
     "codegen:schema": "gql-tada generate-schema https://spacex-production.up.railway.app/",
     "codegen:grapqhl": "gql-tada generate-output",
     "codegen": "bun run codegen:schema && bun run codegen:graphql",
-    "lint:biome:fix": "npx @biomejs/biome check . --write",
-    "lint:biome": "npx @biomejs/biome check .",
+    "lint:biome:fix": "@biomejs/biome check . --write",
+    "lint:biome": "@biomejs/biome check .",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -34,5 +34,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "vinxi": "^0.5.6"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": ["@biomejs/biome check --write ."]
   }
 }
