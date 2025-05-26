@@ -1,0 +1,26 @@
+{
+  "name": "tanstack-start-play",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "codegen:schema": "gql-tada generate-schema https://spacex-production.up.railway.app/",
+    "codegen:grapqhl": "gql-tada generate-output",
+    "codegen": "bun run codegen:schema && bun run codegen:graphql",
+    "lint:biome:fix": "npx @biomejs/biome check . --write",
+    "lint:biome": "npx @biomejs/biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/bun": "latest",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "gql.tada": "^1.8.10"
+  }
+}
