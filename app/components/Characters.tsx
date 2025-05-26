@@ -45,6 +45,11 @@ export const getCharactersOptions = () =>
       console.log("🔄 Query function called for characters");
       return graffle.gql(CharactersDocument).send();
     },
+    staleTime: Number.POSITIVE_INFINITY, // Data never becomes stale
+    gcTime: Number.POSITIVE_INFINITY, // Keep data in cache indefinitely
+    refetchOnMount: false, // Don't refetch when component mounts
+    refetchOnWindowFocus: false, // Don't refetch when window gains focus
+    refetchOnReconnect: false, // Don't refetch when reconnecting
   });
 
 const getStatusColor = (status: string | null | undefined): string => {
@@ -88,9 +93,9 @@ const getGenderEmoji = (gender: string | null | undefined): string => {
 
   switch (genderLower) {
     case "male":
-      return "♂️";
+      return "👨";
     case "female":
-      return "♀️";
+      return "👩";
     case "genderless":
       return "⚪";
     case "unknown":
@@ -112,7 +117,7 @@ export const Characters: ComponentType = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-bold">👥 Rick & Morty Characters</h1>
+        <h1 className="text-4xl font-bold">🚀 Rick & Morty Characters</h1>
         <button
           type="button"
           className="btn btn-primary"
@@ -246,9 +251,9 @@ export const Characters: ComponentType = () => {
                       </div>
                       <div className="collapse-content px-3 pb-3">
                         <div className="space-y-1">
-                          {character.episode.map((ep, epIndex) => (
+                          {character.episode.map((ep) => (
                             <div
-                              key={epIndex}
+                              key={ep?.name}
                               className="text-xs text-base-content/80"
                             >
                               • {ep?.name}
