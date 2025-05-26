@@ -11,7 +11,8 @@
     "codegen:grapqhl": "gql-tada generate-output",
     "codegen": "bun run codegen:schema && bun run codegen:graphql",
     "lint:biome:fix": "npx @biomejs/biome check . --write",
-    "lint:biome": "npx @biomejs/biome check ."
+    "lint:biome": "npx @biomejs/biome check .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
