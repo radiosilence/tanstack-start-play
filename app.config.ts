@@ -8,10 +8,6 @@ export default defineConfig({
   },
   server: {
     preset: "bun",
-    prerender: {
-      routes: ["/"],
-      crawlLinks: true,
-    },
   },
   vite: {
     plugins: [
