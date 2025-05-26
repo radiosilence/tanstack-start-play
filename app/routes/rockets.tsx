@@ -1,7 +1,7 @@
 import { graffle } from "@/graffle";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { graphql, type ResultOf } from "gql.tada";
+import { graphql } from "gql.tada";
 import type { ComponentType } from "react";
 
 export const RocketsDocument = graphql(`
@@ -75,11 +75,11 @@ const getCountryFlag = (country: string | null | undefined): string => {
   return flagMap[countryLower] || "🌍";
 };
 
-export const Rockets: ComponentType<{
-  initialData?: ResultOf<typeof RocketsDocument> | null | undefined;
-}> = () => {
+export const Rockets: ComponentType = () => {
   console.log("🎨 Rendering Rockets component");
-  const { data, refetch } = useSuspenseQuery(getRocketsOptions());
+  const { data, refetch, isLoading, isRefetching } = useSuspenseQuery(
+    getRocketsOptions(),
+  );
   console.log(
     "📊 Current rocket data in component:",
     data?.rockets?.length,
@@ -90,6 +90,13 @@ export const Rockets: ComponentType<{
     if (!amount) return "💸 Not disclosed";
     return `💰 $${amount.toLocaleString()}`;
   };
+
+  if (isLoading || isRefetching)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
 
   return (
     <>
@@ -261,10 +268,7 @@ export const Route = createFileRoute("/rockets")({
   component: Rockets,
   loader: async ({ context }) => {
     console.log("⚡ Route loader starting...");
-    const rockets = await context.queryClient.ensureQueryData(
-      getRocketsOptions(),
-    );
+    await context.queryClient.ensureQueryData(getRocketsOptions());
     console.log("✅ Route loader completed, rockets data ensured");
-    return { rockets };
   },
 });
