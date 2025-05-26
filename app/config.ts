@@ -1,5 +1,5 @@
 export const config = {
   gqlTransport: {
-    url: "https://spacex-production.up.railway.app",
+    url: "https://rickandmortyapi.com/graphql",
   },
 };

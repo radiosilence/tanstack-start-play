@@ -10,85 +10,85 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as RocketsImport } from "./routes/rockets";
-import { Route as IndexImport } from "./routes/index";
+import { Route as rootRoute } from './routes/__root'
+import { Route as CharactersImport } from './routes/characters'
+import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const RocketsRoute = RocketsImport.update({
-  id: "/rockets",
-  path: "/rockets",
+const CharactersRoute = CharactersImport.update({
+  id: '/characters',
+  path: '/characters',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/rockets": {
-      id: "/rockets";
-      path: "/rockets";
-      fullPath: "/rockets";
-      preLoaderRoute: typeof RocketsImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/characters': {
+      id: '/characters'
+      path: '/characters'
+      fullPath: '/characters'
+      preLoaderRoute: typeof CharactersImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/rockets": typeof RocketsRoute;
+  '/': typeof IndexRoute
+  '/characters': typeof CharactersRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/rockets": typeof RocketsRoute;
+  '/': typeof IndexRoute
+  '/characters': typeof CharactersRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/rockets": typeof RocketsRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/characters': typeof CharactersRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/rockets";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/rockets";
-  id: "__root__" | "/" | "/rockets";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/characters'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/characters'
+  id: '__root__' | '/' | '/characters'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  RocketsRoute: typeof RocketsRoute;
+  IndexRoute: typeof IndexRoute
+  CharactersRoute: typeof CharactersRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  RocketsRoute: RocketsRoute,
-};
+  CharactersRoute: CharactersRoute,
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -97,14 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/rockets"
+        "/characters"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/rockets": {
-      "filePath": "rockets.tsx"
+    "/characters": {
+      "filePath": "characters.tsx"
     }
   }
 }
