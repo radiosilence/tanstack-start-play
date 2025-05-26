@@ -4,7 +4,7 @@ import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   server: {
-    preset: "node-server",
+    preset: "bun",
   },
   vite: {
     plugins: [
