@@ -16,7 +16,7 @@ export const RocketsDocument = graphql(`
 const INTERNAL__getRockets = async () => graffle.gql(RocketsDocument).send();
 
 export const getRockets = createServerFn({
-  method: "GET",
+  type: "static",
 }).handler(() => INTERNAL__getRockets());
 
 const RocketSkeleton = () => (

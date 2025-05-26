@@ -22,11 +22,10 @@
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
     "daisyui": "latest",
+    "husky": "^9.1.7",
     "tailwindcss": "latest",
+    "typescript": "latest",
     "vite-tsconfig-paths": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "latest"
   },
   "dependencies": {
     "@tanstack/react-query": "latest",
@@ -41,6 +40,8 @@
     "vinxi": "latest"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,md}": ["@biomejs/biome check --write ."]
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "@biomejs/biome check --write ."
+    ]
   }
 }

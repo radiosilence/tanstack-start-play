@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import "../main.css";
+import appCss from "@/styles/app.css?url";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -22,9 +22,10 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "ROCKETS",
       },
     ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   component: RootComponent,
 });
