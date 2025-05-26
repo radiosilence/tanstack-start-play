@@ -10,8 +10,8 @@
     "codegen:schema": "gql-tada generate-schema https://spacex-production.up.railway.app/",
     "codegen:grapqhl": "gql-tada generate-output",
     "codegen": "bun run codegen:schema && bun run codegen:graphql",
-    "lint:biome:fix": "@biomejs/biome check . --write",
     "lint:biome": "@biomejs/biome check .",
+    "lint:biome:fix": "@biomejs/biome check . --write",
     "prepare": "husky"
   },
   "devDependencies": {
