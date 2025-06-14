@@ -1,5 +1,5 @@
 import { Characters, getCharactersOptions } from "@/components/Characters";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 export function CharactersPage() {
@@ -13,6 +13,7 @@ export function CharactersPage() {
         </div>
       }
     >
+      <Outlet />
       <Characters />
     </Suspense>
   );
