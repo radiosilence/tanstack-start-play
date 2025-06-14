@@ -1,6 +1,7 @@
 import { graffle } from "@/graffle";
+import type { QueryFunction } from "@tanstack/react-query";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { graphql, readFragment } from "gql.tada";
+import { graphql, readFragment, type TadaDocumentNode } from "gql.tada";
 import type { ComponentType } from "react";
 
 const LocationDocument = graphql(`
@@ -40,11 +41,8 @@ export const CharactersDocument = graphql(
 
 export const getCharactersOptions = () =>
   queryOptions({
-    queryKey: ["characters"],
-    queryFn: () => {
-      console.log("🔄 Query function called for characters");
-      return graffle.gql(CharactersDocument).send();
-    },
+    queryKey: [CharactersDocument, ""] as const,
+    queryFn: ({ queryKey: [doc, args] }) => graffle.gql(doc).send(args),
     staleTime: Number.POSITIVE_INFINITY, // Data never becomes stale
     gcTime: Number.POSITIVE_INFINITY, // Keep data in cache indefinitely
     refetchOnMount: false, // Don't refetch when component mounts
@@ -52,6 +50,22 @@ export const getCharactersOptions = () =>
     refetchOnReconnect: false, // Don't refetch when reconnecting
   });
 
+// export function useQueryGql<
+//   T extends Record<string, unknown>,
+//   A extends Record<string, any>,
+// >(
+//   doc: TadaDocumentNode<T, A>,
+//   args: A,
+//   opts: Omit<UseSuspenseQueryOptions, "queryKey" | "queryFn"> = {},
+// ) {
+//   return useSuspenseQuery({
+//     queryKey: [doc, args] as const,
+//     queryFn: ({ queryKey: [doc, args] }) => graffle.gql(doc).send(args),
+//     ...opts,
+//   });
+// }
+
+// const [a, b] = useQueryGql(CharactersDocument, { name: "baz" });
 const getStatusColor = (status: string | null | undefined): string => {
   if (!status) return "badge-neutral";
 
@@ -106,8 +120,11 @@ const getGenderEmoji = (gender: string | null | undefined): string => {
 };
 
 export const Characters: ComponentType = () => {
+  const name = "baz";
   console.log("🎨 Rendering Characters component");
   const { data, refetch } = useSuspenseQuery(getCharactersOptions());
+
+  // const { data, refetch } = useQueryGQL(CharactersDocument, { name });
   console.log(
     "📊 Current character data in component:",
     data?.characters?.results?.length,
