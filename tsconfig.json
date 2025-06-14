@@ -9,7 +9,7 @@
 
     // Paths
     "paths": {
-      "@/*": ["./app/*"]
+      "@/*": ["./src/*"]
     },
 
     // Bundler mode
