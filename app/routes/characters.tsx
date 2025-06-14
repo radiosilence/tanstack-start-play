@@ -22,7 +22,7 @@ export const Route = createFileRoute("/characters")({
   component: CharactersPage,
   loader: async ({ context }) => {
     console.log("⚡ Route loader starting...");
-    await context.queryClient.ensureQueryData(getCharactersOptions("derp"));
+    await context.queryClient.ensureQueryData(getCharactersOptions());
     console.log("✅ Route loader completed, data ensured");
   },
 });
