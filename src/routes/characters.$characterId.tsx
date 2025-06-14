@@ -20,7 +20,7 @@ function CharacterPage() {
   );
 }
 
-export const Route = createFileRoute("/characters_/$characterId")({
+export const Route = createFileRoute("/characters/$characterId")({
   component: CharacterPage,
   loader: async ({ context, params: { characterId } }) => {
     await context.queryClient.ensureQueryData(
