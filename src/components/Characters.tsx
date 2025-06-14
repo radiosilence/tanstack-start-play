@@ -1,8 +1,8 @@
-import { getOptions, graffle } from "@/graffle";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { gqlOptions } from "@/graffle";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { graphql, readFragment } from "gql.tada";
 import type { ComponentType } from "react";
-import { Link } from "@tanstack/react-router";
 
 const LocationDocument = graphql(`
   fragment Location on Location {
@@ -39,15 +39,6 @@ export const CharactersDocument = graphql(
   `,
   [LocationDocument],
 );
-
-export const getCharactersOptions = () => ({
-  ...getOptions(CharactersDocument),
-  // staleTime: Number.POSITIVE_INFINITY, // Data never becomes stale
-  // gcTime: Number.POSITIVE_INFINITY, // Keep data in cache indefinitely
-  // refetchOnMount: false, // Don't refetch when component mounts
-  // refetchOnWindowFocus: false, // Don't refetch when window gains focus
-  // refetchOnReconnect: false, // Don't refetch when reconnecting
-});
 
 const getStatusColor = (status: string | null | undefined): string => {
   if (!status) return "badge-neutral";
@@ -104,7 +95,7 @@ const getGenderEmoji = (gender: string | null | undefined): string => {
 
 export const Characters: ComponentType = () => {
   console.log("🎨 Rendering Characters component");
-  const { data, refetch } = useSuspenseQuery(getCharactersOptions());
+  const { data, refetch } = useSuspenseQuery(gqlOptions(CharactersDocument));
 
   // const { data, refetch } = useQueryGQL(CharactersDocument, { name });
   console.log(

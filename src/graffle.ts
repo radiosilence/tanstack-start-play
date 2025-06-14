@@ -1,11 +1,11 @@
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import type { TadaDocumentNode } from "gql.tada";
 import { Graffle } from "graffle";
 import { config } from "./config";
-import type { TadaDocumentNode } from "gql.tada";
-import { queryOptions } from "@tanstack/react-query";
 
 export const graffle = Graffle.create().transport(config.gqlTransport);
 
-export const getOptions = <
+export const gqlOptions = <
   TDoc extends TadaDocumentNode<any, any>,
   TVars extends TDoc extends TadaDocumentNode<any, infer V> ? V : never,
 >(

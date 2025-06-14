@@ -1,4 +1,5 @@
-import { Character, getCharacterOptions } from "@/components/Character";
+import { Character, CharacterDocument } from "@/components/Character";
+import { gqlOptions } from "@/graffle";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
@@ -14,7 +15,7 @@ function CharacterPage() {
         </div>
       }
     >
-      <Character id={characterId} />
+      <Character characterId={characterId} />
     </Suspense>
   );
 }
@@ -22,8 +23,8 @@ function CharacterPage() {
 export const Route = createFileRoute("/characters/$characterId")({
   component: CharacterPage,
   loader: async ({ context, params: { characterId } }) => {
-    console.log("⚡ Route loader starting...");
-    await context.queryClient.ensureQueryData(getCharacterOptions(characterId));
-    console.log("✅ Route loader completed, data ensured");
+    await context.queryClient.ensureQueryData(
+      gqlOptions(CharacterDocument, { characterId }),
+    );
   },
 });

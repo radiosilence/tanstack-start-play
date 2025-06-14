@@ -1,4 +1,5 @@
-import { Characters, getCharactersOptions } from "@/components/Characters";
+import { Characters, CharactersDocument } from "@/components/Characters";
+import { gqlOptions } from "@/graffle";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
 
@@ -22,8 +23,6 @@ export function CharactersPage() {
 export const Route = createFileRoute("/characters")({
   component: CharactersPage,
   loader: async ({ context }) => {
-    console.log("⚡ Route loader starting...");
-    await context.queryClient.ensureQueryData(getCharactersOptions());
-    console.log("✅ Route loader completed, data ensured");
+    await context.queryClient.ensureQueryData(gqlOptions(CharactersDocument));
   },
 });
