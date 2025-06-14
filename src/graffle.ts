@@ -1,4 +1,4 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import type { TadaDocumentNode } from "gql.tada";
 import { Graffle } from "graffle";
 import { config } from "./config";
