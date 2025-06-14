@@ -1,8 +1,8 @@
 import { Characters, getCharactersOptions } from "@/components/Characters";
 import { createFileRoute } from "@tanstack/react-router";
-import { type ComponentType, Suspense } from "react";
+import { Suspense } from "react";
 
-export const CharactersPage: ComponentType = () => {
+export function CharactersPage() {
   console.log("🎨 Rendering CharactersPage component");
 
   return (
@@ -16,7 +16,7 @@ export const CharactersPage: ComponentType = () => {
       <Characters />
     </Suspense>
   );
-};
+}
 
 export const Route = createFileRoute("/characters")({
   component: CharactersPage,

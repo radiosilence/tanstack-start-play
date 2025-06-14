@@ -1,8 +1,8 @@
 import { graffle } from "@/graffle";
-import type { QueryFunction } from "@tanstack/react-query";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { graphql, readFragment, type TadaDocumentNode } from "gql.tada";
+import { graphql, readFragment } from "gql.tada";
 import type { ComponentType } from "react";
+import { Link } from "@tanstack/react-router";
 
 const LocationDocument = graphql(`
   fragment Location on Location {
@@ -17,6 +17,7 @@ export const CharactersDocument = graphql(
   query Characters {
     characters {
       results {
+        id,
         name
         image
         status
@@ -120,7 +121,6 @@ const getGenderEmoji = (gender: string | null | undefined): string => {
 };
 
 export const Characters: ComponentType = () => {
-  const name = "baz";
   console.log("🎨 Rendering Characters component");
   const { data, refetch } = useSuspenseQuery(getCharactersOptions());
 
@@ -177,7 +177,9 @@ export const Characters: ComponentType = () => {
               <div className="card-body p-4">
                 {/* Character Name */}
                 <h2 className="card-title text-xl font-bold mb-3 text-center">
-                  {character?.name}
+                  <Link to={`/characters/${character?.id}`}>
+                    {character?.name}
+                  </Link>
                 </h2>
 
                 {/* Basic Info */}

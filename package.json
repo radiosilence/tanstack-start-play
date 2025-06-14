@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
+    "build": "vite build",
+    "dev": "vite dev",
+    "start": "bun .output/server/index.mjs",
     "codegen:schema:rickmorty": "gql-tada generate-schema https://rickandmortyapi.com/graphql --output ./schema.graphql",
     "codegen:schema": "bun run codegen:schema:rickmorty",
     "codegen:graphql": "gql-tada generate-output",

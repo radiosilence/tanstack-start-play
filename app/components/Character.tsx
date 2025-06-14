@@ -16,16 +16,20 @@ export const CharacterDocument = graphql(`
   }
 `);
 
-// example doc from r&m free api
-export const CharactersDocument = graphql(`
-  query Characters {
-    characters {
-      results {
-        name
-      }
-    }
-  }
-`);
+export const getOptions2 = <
+  TDoc extends TadaDocumentNode<any, any>,
+  TVars extends TDoc extends TadaDocumentNode<any, infer V> ? V : never,
+>(
+  doc: TDoc,
+  vars?: TVars,
+) =>
+  queryOptions({
+    queryKey: [doc, vars] as const,
+    queryFn: ({ queryKey: [d, ...rest] }) => {
+      const gqlDoc = graffle.gql(d);
+      return gqlDoc.send(...(rest as Parameters<typeof gqlDoc.send>));
+    },
+  });
 
 export const getOptions = <
   Data extends Record<string, unknown>,
@@ -33,16 +37,14 @@ export const getOptions = <
 >(
   doc: TadaDocumentNode<Data, Vars>,
   vars?: Vars,
-) => {
-  return queryOptions({
+) =>
+  queryOptions({
     queryKey: [doc, vars] as const,
-    queryFn: ({ queryKey: [doc, vars] }) => {
-      /* Argument of type '[Vars]' is not assignable to parameter of type
-      'SendArguments__<IsUnknown<Vars> extends true ? Variables : Vars, GetVariablesInputKind<IsUnknown<Vars> extends true ? Variables : Vars>>'. (ts 2345) */
-      return graffle.gql(doc).send(vars);
+    queryFn: ({ queryKey: [d, ...rest] }) => {
+      const gqlDoc = graffle.gql(d);
+      return gqlDoc.send(...(rest as Parameters<typeof gqlDoc.send>));
     },
   });
-};
 
 // Concrete example works fine!!!
 export const getCharacterOptions = (id: string) => {
@@ -55,13 +57,13 @@ export const getCharacterOptions = (id: string) => {
 export const Character: ComponentType<{ id: string }> = ({ id }) => {
   // A nice succinct function that can be used in SSR or CSR
   const generic = useSuspenseQuery(getOptions(CharacterDocument, { id }));
-  const list = useSuspenseQuery(getOptions(CharactersDocument));
+  const generic2 = useSuspenseQuery(getOptions2(CharacterDocument, { id }));
   const concrete = useSuspenseQuery(getCharacterOptions(id));
   return (
-    <>
-      {generic.data?.character?.name}
-      {concrete.data?.character?.name}
-      {JSON.stringify(list.data?.characters?.results)}
-    </>
+    <ul>
+      <li>generic: {generic.data?.character?.name}</li>
+      <li>generic2: {generic2.data?.character?.name}</li>
+      <li>concrete: {concrete.data?.character?.name}</li>
+    </ul>
   );
 };
