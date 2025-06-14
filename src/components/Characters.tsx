@@ -42,11 +42,11 @@ export const CharactersDocument = graphql(
 
 export const getCharactersOptions = () => ({
   ...getOptions(CharactersDocument),
-  staleTime: Number.POSITIVE_INFINITY, // Data never becomes stale
-  gcTime: Number.POSITIVE_INFINITY, // Keep data in cache indefinitely
-  refetchOnMount: false, // Don't refetch when component mounts
-  refetchOnWindowFocus: false, // Don't refetch when window gains focus
-  refetchOnReconnect: false, // Don't refetch when reconnecting
+  // staleTime: Number.POSITIVE_INFINITY, // Data never becomes stale
+  // gcTime: Number.POSITIVE_INFINITY, // Keep data in cache indefinitely
+  // refetchOnMount: false, // Don't refetch when component mounts
+  // refetchOnWindowFocus: false, // Don't refetch when window gains focus
+  // refetchOnReconnect: false, // Don't refetch when reconnecting
 });
 
 const getStatusColor = (status: string | null | undefined): string => {
